@@ -3,6 +3,7 @@ package com.quiz.lesson02.model;
 import java.util.Date;
 
 public class Store {
+	// mysql desc `store`; 스키마 정보
 	private int id;
 	private String name;
 	private String phoneNumber;

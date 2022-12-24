@@ -16,7 +16,7 @@ public class Lesson02Quiz01RestController {
 	private StoreBO storeBO;
 	
 	@RequestMapping("/lesson02/quiz01")
-	public List<Store> quiz01() {
+	public List<Store> quiz01() { // 응답값, 여러개의 행일 경우 list
 		List<Store> storeList = storeBO.getStoreList();
 		return storeList;
 	}
