@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.quiz.lesson03.dao.RealEstateDAO;
 import com.quiz.lesson03.model.RealEstate;
@@ -14,16 +15,33 @@ public class RealEstateBO {
 	@Autowired
 	private RealEstateDAO realEstateDAO;
 	
-	public RealEstate getRealEstate(int id) {
-		return realEstateDAO.selectRealEstate(id);
+	// input: controller가 넘겨주는 id
+	// output: RealEstate 단건 (id는 유일한 키이기 때문에 단건) => 컨트롤러한테 넘김
+	public RealEstate getRealEstateById(int id) {
+		return realEstateDAO.selectRealEstateById(id);
 	}
 	
-	public List<RealEstate> getRealEstate_2(Integer rentPrice) {
-		return realEstateDAO.selectRealEstate_2(rentPrice);
+	// input: controller가 넘겨준 rentPrice
+	// output: List<RealEstate> => 컨트롤러한테 넘김
+	public List<RealEstate> getRealEstateListByRentPrice(int rentPrice) {
+		return realEstateDAO.selectRealEstateListByRentPrice(rentPrice);
 	}
 	
-	public List<RealEstate> getRealEstate_3(int area, int price) {
-		return realEstateDAO.selectRealEstate_3(area, price);
+	// input: controller가 넘겨준 area,price
+	// output : List<RealEstate> => 컨트롤러한테 넘김
+	public List<RealEstate> getRealEstateListByAreaPrice(int area, int price) {
+		return realEstateDAO.selectRealEstateListByAreaPrice(area, price);
+	}
+	
+	// input: RealEstate
+	// output : int (성공한 행의 개수)
+	public int addRealEstate(RealEstate realEstate) {
+		return realEstateDAO.insertRealEstate(realEstate);
+	}
+	
+	// @RequestParam("realtor_id") int realtorId, "썅떼빌리버 오피스텔 814호", 45, "월세", 100000, 120
+	public int addRealEstateAsField(int realtorId, String address, int area, String type, int price, Integer rentPrice) {
+		return realEstateDAO.insertRealEstateAsField(realtorId, address, area, type, price, rentPrice);
 	}
 	
 }

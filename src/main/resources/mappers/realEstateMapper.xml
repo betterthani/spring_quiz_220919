@@ -3,7 +3,8 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.quiz.lesson03.dao.RealEstateDAO">
- 	<select id="selectRealEstate" resultType="com.quiz.lesson03.model.RealEstate">
+ 	<!-- 문제 1 -->
+ 	<select id="selectRealEstateById" resultType="com.quiz.lesson03.model.RealEstate" parameterType="int">
  		SELECT
  			`id`
 			,`realtorId`
@@ -21,7 +22,8 @@
  			
  	</select>
  	
- 	<select id="selectRealEstate_2" resultType="com.quiz.lesson03.model.RealEstate">
+ 	<!-- 문제 2 -->
+ 	<select id="selectRealEstateListByRentPrice" resultType="com.quiz.lesson03.model.RealEstate" parameterType="int">
  		SELECT
  			`id`
 			,`realtorId`
@@ -35,11 +37,13 @@
  		FROM
  			`real_estate`
  		WHERE
-	        `rentPrice` &lt; 90
+ 		<![CDATA[
+	        `rentPrice` < #{rentPrice}
+	    ]]>
 	        
  	</select>
  	
- 	<select id="selectRealEstate_3" resultType="com.quiz.lesson03.model.RealEstate">
+ 	<select id="selectRealEstateListByAreaPrice" resultType="com.quiz.lesson03.model.RealEstate" parameterType="map">
  		SELECT
  			`id`
 			,`realtorId`
@@ -53,10 +57,68 @@
  		FROM
  			`real_estate`
  		WHERE
-	        `area` &gt;= 90 AND `price` &lt;= 130000
+ 		<![CDATA[
+	        `area` >= #{area} 
+	        AND `price` <= #{price} 
+	        AND `type` = '매매'
+	        
 	    ORDER BY
-	    	`createdAt` DESC
-	        
+	    	`id`
+	    DESC
+	    ]]>
+	    <!-- 등록일 기준일 경우 creatAt은 인덱스를 걸지않아 많은 데이터가 나올 수 있음. 그래서 id기준으로 정렬 -->
  	</select>
  	
+ 	<!-- insert문 1번문제 -->
+ 	<insert id="insertRealEstate" parameterType="com.quiz.lesson03.model.RealEstate">
+ 		INSERT INTO `real_estate`
+ 		(
+ 			`realtorId`
+			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{realtorId}
+ 			, #{address}
+ 			, #{area}
+ 			, #{type}
+ 			, #{price}
+ 			, #{rentPrice}
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 		
+ 	</insert>
+ 	
+ 	<insert id="insertRealEstateAsField" parameterType="map">
+ 		INSERT INTO `real_estate`
+ 		(
+ 			`realtorId`
+			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{realtorId}
+ 			, #{address}
+ 			, #{area}
+ 			, #{type}
+ 			, #{price}
+ 			, #{rentPrice}
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 	</insert>
+ 
  </mapper>

@@ -11,31 +11,32 @@ import com.quiz.lesson03.bo.RealEstateBO;
 import com.quiz.lesson03.model.RealEstate;
 
 @RestController
+@RequestMapping("/lesson03/quiz01")
 public class Lesson03Quiz01RestController {
 	
 	@Autowired
 	private RealEstateBO realEstateBO;
 	
 	//http://localhost:8080/lesson03/quiz01/1?id=20
-	@RequestMapping("lesson03/quiz01/1")
+	@RequestMapping("/1")
 	public RealEstate quiz01 (
 			@RequestParam(value="id", defaultValue = "1") int id) {
-		return realEstateBO.getRealEstate(id);
+		return realEstateBO.getRealEstateById(id); // json
 	}
 	
 	// http://localhost:8080/lesson03/quiz01/2?rent_price=90
-		@RequestMapping("lesson03/quiz01/2")
+		@RequestMapping("/2")
 		public List<RealEstate> quiz01_2 (
-				@RequestParam(value="rentPrice", required = false) Integer rentPrice) {
-			return realEstateBO.getRealEstate_2(rentPrice);
+				@RequestParam(value="rent_price", required = false) int rentPrice) {
+			return realEstateBO.getRealEstateListByRentPrice(rentPrice); // json
 		}
 		
 	// http://localhost:8080/lesson03/quiz01/3?area=90&price=130000
-		@RequestMapping("lesson03/quiz01/3")
+		@RequestMapping("/3")
 		public List<RealEstate> quiz01_3(
 				@RequestParam(value="area") int area, 
 				@RequestParam(value="price") int price
 		) {
-			return realEstateBO.getRealEstate_3(area, price);
+			return realEstateBO.getRealEstateListByAreaPrice(area, price); // json
 		}
 }
