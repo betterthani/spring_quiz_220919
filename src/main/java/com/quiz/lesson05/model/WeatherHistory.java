@@ -2,8 +2,11 @@ package com.quiz.lesson05.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class WeatherHistory {
 	private int id;
+	//@DateTimeFormat(pattern = "yyyy-MM-dd") -> @ModelAttribute 사용시에 해당하는 곳에 넣어주면 된다.
 	private Date date;
 	private String weather;
 	private double temperatures;
@@ -68,6 +71,7 @@ public class WeatherHistory {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
 	
 	
 

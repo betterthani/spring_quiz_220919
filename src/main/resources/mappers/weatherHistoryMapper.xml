@@ -3,7 +3,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.quiz.lesson05.dao.WeatherHistoryDAO">
- 	<insert id="insertWeatherHistory" parameterType="com.quiz.lesson05.model.WeatherHistory">
+ 	<insert id="insertWeatherHistory" parameterType="map"> <!--객체로 넘겼을 경우 parameterType= com.quiz.lesson05.model.WeatherHistory--> 
  		INSERT INTO `weather_history`
  		(
 	 		`date`

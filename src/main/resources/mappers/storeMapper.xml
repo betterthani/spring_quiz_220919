@@ -5,7 +5,14 @@
  <mapper namespace="com.quiz.lesson02.dao.StoreDAO">
  	<select id="selectStoreList" resultType="com.quiz.lesson02.model.Store"> <!-- resultType : 하나하나행이 어떤 타입에 담기게 되는가 = 모델 -->
  		SELECT
- 			*
+ 			`id`
+			,`name`
+			,`phoneNumber`
+			,`address`
+			,`businessNumber`
+			,`introduce`
+			,`createdAt`
+			,`updatedAt`
  		FROM
  			`store`
  	</select>

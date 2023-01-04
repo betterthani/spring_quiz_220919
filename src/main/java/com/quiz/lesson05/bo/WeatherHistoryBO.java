@@ -16,8 +16,8 @@ public class WeatherHistoryBO {
 	
 	// intput: WeatherHistory
 	// output: 없음
-	public void addWeatherHistory(WeatherHistory weatherHistory) {
-		weatherHistoryDAO.insertWeatherHistory(weatherHistory);
+	public void addWeatherHistory(String date,String weather,String microDust,double temperatures,double precipitation,double windSpeed) {
+		weatherHistoryDAO.insertWeatherHistory(date, weather, microDust, temperatures, precipitation, windSpeed);
 	}
 	
 	public List<WeatherHistory> getWeatherHistoryList() {

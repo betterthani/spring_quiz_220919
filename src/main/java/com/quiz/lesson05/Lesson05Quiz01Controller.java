@@ -1,19 +1,25 @@
 package com.quiz.lesson05;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.quiz.lesson04.model.Member;
 import com.quiz.lesson05.bo.WeatherHistoryBO;
 import com.quiz.lesson05.model.WeatherHistory;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @RequestMapping("/lesson05")
 @Controller
@@ -201,20 +207,28 @@ public class Lesson05Quiz01Controller {
 	// http://localhost:8080/lesson05/quiz05/add_weather_view
 	// insert 화면
 	@GetMapping("/quiz05/add_weather_view")
-	public String addWeather_view(
-			WeatherHistory weatherHistory,
-			Model model) {
-
-		// DB insert
-		weatherHistoryBO.addWeatherHistory(weatherHistory);
-
-		// DB select
-		List<WeatherHistory> weatherHistory1 = weatherHistoryBO.getWeatherHistoryList();
-
-		// model(view연결)
-		model.addAttribute("weatherHistory", weatherHistory1);
-		
+	public String addWeather_view() {
 		return "lesson05/quiz05Insert";
+		//return "redirect:/lesson05/quiz05";
 	}
+	// 추가 -> 결과화면 목록화면 이동(redirect)
+	@PostMapping("/quiz05/add_weather")
+	public String addWeather(
+			// @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+			@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") String date, // String으로 인서트해도 DB에서는 date타입으로 잘 저장된다.
+			@RequestParam("weather") String weather,
+			@RequestParam("microDust") String microDust,
+			@RequestParam("temperatures") double temperatures,
+			@RequestParam("precipitation") double precipitation,
+			@RequestParam("windSpeed") double windSpeed,
+			HttpServletResponse response) {
+		
+				// DB insert
+				weatherHistoryBO.addWeatherHistory(date, weather, microDust, temperatures, precipitation, windSpeed);
 
+				// 목록화면 리다이렉트
+				// response.sendRedirect("/quiz05/add_weather_view");
+				return "redirect:/lesson05/quiz05";
+				
+	}
 }
