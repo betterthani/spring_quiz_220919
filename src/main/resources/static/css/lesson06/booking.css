@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+a,a:hover{text-decoration: none; color: black;}
+header{height: 80px;}
+nav{height: 40px; background: #E3871F;}
+.content{min-height: 500px};
+footer {height: 100px;}
+
+.reservation-box {width:450px;}
+.top{height: 450px;}
+.bottom{height: 300px;}
+
+.banner {height:500px;}
+.real-time-reserved{background-color:#B1520F;}
+.confirm {background-color: #CF6317;}
+
+.box{width: 35px;}

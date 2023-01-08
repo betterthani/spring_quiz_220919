@@ -30,4 +30,42 @@
 		FROM
 			`favorite_url`
  	</select>
+ 	
+ 	<!-- 중복 확인 select(한 행을 가져오기) -->
+ 	<select id="selectFavoriteByUrl" resultType="com.quiz.lesson06.model.FavoriteUrl" parameterType="String">
+ 		SELECT
+ 			`id`
+ 			,`name`
+			,`url`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`favorite_url`
+ 		WHERE
+ 			`url` = #{url}
+ 	</select>
+ 	
+ 	<!-- 중복 확인 select(한 행을 가져오기)_BO가공 버전 -->
+ 	<select id="selectFavoriteListByUrl" resultType="com.quiz.lesson06.model.FavoriteUrl" parameterType="String">
+ 		SELECT
+ 			`id`
+ 			,`name`
+			,`url`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`favorite_url`
+ 		WHERE
+ 			`url` = #{url}
+ 	</select>
+ 	
+ 	<!-- 삭제 -->
+ 	<delete id="deleteFavoriteByid" parameterType="int">
+		DELETE 
+		FROM
+			`favorite_url`
+		WHERE
+			 `id` = #{id};
+ 	</delete>
+ 	
  </mapper>
