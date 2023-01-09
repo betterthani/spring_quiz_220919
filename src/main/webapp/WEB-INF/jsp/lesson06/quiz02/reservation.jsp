@@ -28,7 +28,7 @@
 			<div class="d-flex justify-content-center">
 				<div class="reservation-box">
 					<div class="my-2 font-weight-bold">이름</div>
-					<input type="text" id="name" class="form-control">
+					<input type="text" id="name" name="name" class="form-control">
 					
 					<div class="my-2 font-weight-bold">예약날짜</div>
 					<input type="text" id="date" class="form-control datepicker">
@@ -52,14 +52,15 @@
 	</div>
 	<script>
 		$(document).ready(function(){
-			$('input[id=date]').datepicker({
+			$('#date').datepicker({
 				dateFormat:"yy-mm-dd"
+				, minDate:0 // 오늘부터 그 뒤 선택
 			}); // datepicker 끝
 			
 			$('#reservationBtn').on("click",function(){
 				
 				// validation
-				let name = $('#name').val().trim();
+				let name = $('input[name=name]').val().trim();
 				if(name == ''){
 					alert("이름을 입력하세요.");
 					return;
@@ -76,10 +77,18 @@
 					alert("숙박일수를 입력하세요");
 					return;
 				}
+				if(isNaN(day)){
+					alert("숫자로 입력하세요.");
+					return;
+				}
 				
 				let headcount = $('#headcount').val().trim();
 				if(headcount == ''){
 					alert("숙박인원을 입력하세요");
+					return;
+				}
+				if(isNaN(headcount)){
+					alert("숫자로 입력하세요.");
 					return;
 				}
 				
@@ -94,23 +103,21 @@
 					return;
 				}
 				
-				let state = '대기중';
-				
 				// ajax 통신
 				$.ajax({
 					// request
 					type:"POST"
 					,url:"/booking/reservation"
-					,data:{"name":name, "date":date, "day":day, "headcount":headcount, "phoneNumber":phoneNumber, "state":state}
+					,data:{"name":name, "date":date, "day":day, "headcount":headcount, "phoneNumber":phoneNumber}
 					// response
 					, success:function(data){
-						alert(data.result)
 						if(data.result == "예약 성공"){
+							alert(data.result)
 							location.href = "/booking/reservationList_view";
 						}
 					}
 					, error:function(e){
-						alert("에러" + e);
+						alert("예약하는데 실패했습니다." + e);
 					}
 				}); //->예약하기 ajax통신끝
 			}); //-> 예약하기 버튼누를때 끝

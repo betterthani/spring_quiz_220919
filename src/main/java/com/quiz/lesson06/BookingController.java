@@ -42,7 +42,7 @@ public class BookingController {
 	
 	// 삭제 API
 	// localhost:8080/booking/delete_booking
-	@ResponseBody
+	@ResponseBody // 결과를 항상 json으로 내려준다.
 	@DeleteMapping("/delete_booking")
 	public Map<String, Object> deleteBooking(
 			@RequestParam("id") int id){
@@ -69,13 +69,12 @@ public class BookingController {
 		return "lesson06/quiz02/reservation";
 	}
 	
-	// 예약 ajax통신
+	// 문제2) 예약추가 - ajax통신
 	@ResponseBody
 	@PostMapping("/reservation")
-	public Map<String,String> reservation(
-			@ModelAttribute Booking booking){
+	public Map<String,String> reservation(@ModelAttribute Booking booking){
 		
-		// DB insert
+		// DB insert(서버의 역할로 응답값이 잘되는지 우선 확인하려면, 해당 행 비워두고 Map에 브레이크포인트 둔 후 검토)
 		bookingBO.addBooking(booking);
 		
 		//성공값 응답값
@@ -92,25 +91,43 @@ public class BookingController {
 		return "lesson06/quiz02/bookingHomepage";
 	}
 	
-	// 조회하기 버튼 ajax
+	// 조회하기 버튼 ajax (내가 한 버전)
+//	@ResponseBody
+//	@PostMapping("/homepage")
+//	public Map<String,Booking> homepage(
+//			@RequestParam("name") String name,
+//			@RequestParam("phoneNumber") String phoneNumber){
+//		
+//		Booking booking = bookingBO.getBookingBynamePhoneNumber(name, phoneNumber);
+//		
+//		Map<String, Booking> result = new HashMap<>();
+//		
+//		if(booking != null) {
+//			result.put("answer", booking);
+//		} else {
+//			result.put("answer", null);
+//		}
+//		
+//		return result;
+//		
+//	}
+	
 	@ResponseBody
 	@PostMapping("/homepage")
-	public Map<String,Booking> homepage(
+	public Map<String,Object> getBooking(
 			@RequestParam("name") String name,
 			@RequestParam("phoneNumber") String phoneNumber){
 		
-		Booking booking = bookingBO.getBookingBynamePhoneNumber(name, phoneNumber);
+		// DB select - 최신 예약정보 1건
+		Booking booking = bookingBO.getLatestBookingByNamePhoneNumber(name, phoneNumber);
 		
-		Map<String, Booking> result = new HashMap<>();
-		
+		Map<String,Object> result = new HashMap<>();
 		if(booking != null) {
-			result.put("answer", booking);
+			result.put("booking", booking);
+			result.put("code", 1);
 		} else {
-			result.put("answer", null);
+			result.put("code", 500);
 		}
-		
 		return result;
-		
 	}
-	
 }

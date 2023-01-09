@@ -5,3 +5,5 @@ header{height: 70px;}
 footer{height: 70px;}
 
 .box{width: 570px; height: 100px; border: 1px solid #46C6C6;}
+
+a,a:hover{text-decoration: none; color: black;}

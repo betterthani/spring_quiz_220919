@@ -36,7 +36,7 @@
 			
 			<c:forEach items="${StoreList}" var="store">
 				<div class="box">
-					<h5 class="ml-2 mt-1 font-weight-bold">${store.name}</h5>
+					<h5 class="ml-2 mt-1 font-weight-bold"><a href="/lesson05/reviewView?storeId=${store.id}&name=${store.name}">${store.name}</a></h5>
 					<div class="ml-2">전화 번호: ${store.phoneNumber}</div>
 					<div class="ml-2">주소 : ${store.address}</div>
 				</div><br>

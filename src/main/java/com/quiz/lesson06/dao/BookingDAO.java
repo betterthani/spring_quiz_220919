@@ -19,4 +19,8 @@ public interface BookingDAO {
 	public List<Booking> selectBookingBynamePhoneNumber(
 			@Param("name") String name, 
 			@Param("phoneNumber") String phoneNumber);
+	
+	public Booking selectLatestBookingByNamePhoneNumber(
+			@Param("name") String name, 
+			@Param("phoneNumber") String phoneNumber);
 }

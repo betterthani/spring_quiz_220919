@@ -18,14 +18,14 @@
 	<div id="wrap" class="container">
 		<jsp:include page="bookingHeader.jsp" />
 		<!-- 사진 영역 -->
-		<section class="top bg-danger content">
+		<section class="top content">
 			<div class="banner">
 				<img alt="배너사진" src="/img/lesson06/test06_banner1.jpg" class="bannerPic"  width="100%" height="100%">
 			</div>
 		</section>
 		<!-- 예약란 -->
 		<section>
-			<div class="bottom bg-warning d-flex">
+			<div class="bottom d-flex">
 				<!-- 실시간 예약하기 -->
 				<div class="real-time-reserved col-4 d-flex justify-content-center align-items-center">
 					<div class="display-4 text-white">
@@ -72,6 +72,50 @@
 	<script>
 		$(document).ready(function(){
 			$('#searchBtn').on("click",function(){
+				// alert(1111);
+				let name = $('#name').val().trim();
+				let phoneNumber = $('#phoneNumber').val().trim();
+				if(name == ''){
+					alert("이름을 입력하세요.");
+					return;
+				}
+				if(phoneNumber == ''){
+					alert("전화번호를 입력하세요");
+					return;
+				}
+				
+				if(!phoneNumber.startsWith('010')){
+					alert("010으로 시작한 전화번호를 입력해주세요.");
+					return;
+				}
+				
+				$.ajax({
+					type:"POST"
+					,url:"/booking/homepage"
+					,data:{"name":name , "phoneNumber":phoneNumber}
+					,success:function(data){
+						if(data.code == 1) { // 조회된 내역이 있을때
+							alert(
+									"이름 : " + data.booking.name +
+									"\n날짜 : " + data.booking.date +
+									"\n일수 : " + data.booking.day +
+									"\n인원 : " + data.booking.headcount +
+									"\n상태 : " + data.booking.state
+									);
+						
+						} else { // 조회된 내역이 없을때 또는 에러 상황
+							alert("예약 내역이 없습니다");
+						}
+					}
+					,error:function(e){
+						alert("조회에 실패했습니다.");
+					}
+				});
+			});
+			
+			/* 
+				// 조회 내가 한 방법
+				$('#searchBtn').on("click",function(){
 				// alert("1111");
 				let name = $('#name').val().trim();
 				if(name == ''){
@@ -115,7 +159,7 @@
 					}
 					
 				}); //->ajax 통신
-			});//->조회버튼
+			});//->조회버튼 */
 			
 			let bannerArray = ["/img/lesson06/test06_banner1.jpg","/img/lesson06/test06_banner2.jpg","/img/lesson06/test06_banner3.jpg","/img/lesson06/test06_banner4.jpg"]
 			let currentIndex = 1;

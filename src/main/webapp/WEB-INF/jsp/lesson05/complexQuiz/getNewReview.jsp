@@ -33,11 +33,13 @@
 		
 		<section class="content ml-1">
 			<h1 class="mt-2">배달삼겹-리뷰</h1>
+			<c:forEach var="review" items="${newReviewList}">
 				<div class="box">
-					<h5 class="ml-2 mt-1 font-weight-bold">test</h5>
+					<h5 class="ml-2 mt-1 font-weight-bold">${review.userName}</h5>
 					<div class="ml-2">test</div>
 					<div class="ml-2">test</div>
 				</div><br>
+			</c:forEach>
 			<%--
 			<c:forEach items="${StoreList}" var="store">
 				<div class="box">

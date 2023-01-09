@@ -29,13 +29,18 @@ public class BookingBO {
 		bookingDAO.insertBooking(booking);
 	}
 	
-	// name, phone조회
+	// name, phone조회 (내 방법)
 	public Booking getBookingBynamePhoneNumber(String name, String phoneNumber) {
 		List<Booking> booking = bookingDAO.selectBookingBynamePhoneNumber(name, phoneNumber);
 		if(booking.isEmpty() == false) {
 			return booking.get(0);
 		}
 		return null;
+	}
+	
+	// 조회 썜방법
+	public Booking getLatestBookingByNamePhoneNumber(String name, String phoneNumber) {
+		return bookingDAO.selectLatestBookingByNamePhoneNumber(name, phoneNumber);
 	}
 
 }
