@@ -14,8 +14,9 @@ public class NewReviewBO {
 	@Autowired
 	private NewReviewDAO newReviewDAO;
 	
-	
-	public List<NewReview> getNewReviewByIdName(int storeId, String name) {
-		return newReviewDAO.selectNewReviewByIdName(null);
+	public List<NewReview> getNewReviewByStoreIdName(int storeId){
+		return newReviewDAO.selectNewReviewByStoreIdName(storeId);
 	}
+	
+
 }

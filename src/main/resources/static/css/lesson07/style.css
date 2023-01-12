@@ -1,0 +1,12 @@
+@charset "UTF-8";
+#wrap{width: 1200px; height: 1500px;}
+header{height: 60px;}
+.content{height: 320px;}
+.content2{height: 460px;}
+.box{width: 450px; min-height: 300px;}
+.loginBox{width: 420px; min-height:250px; background: #FDF5E6;}
+footer{height: 50px;}
+.boxColor{background: #FAFAD2;}
+
+
+.joinBox{width: 420px; min-height:250px; background: #FDF5E6;}

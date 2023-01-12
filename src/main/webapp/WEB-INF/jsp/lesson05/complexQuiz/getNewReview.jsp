@@ -32,23 +32,48 @@
 		</header>
 		
 		<section class="content ml-1">
-			<h1 class="mt-2">배달삼겹-리뷰</h1>
-			<c:forEach var="review" items="${newReviewList}">
-				<div class="box">
-					<h5 class="ml-2 mt-1 font-weight-bold">${review.userName}</h5>
-					<div class="ml-2">test</div>
-					<div class="ml-2">test</div>
-				</div><br>
-			</c:forEach>
-			<%--
-			<c:forEach items="${StoreList}" var="store">
-				<div class="box">
-					<h5 class="ml-2 mt-1 font-weight-bold">${store.name}</h5>
-					<div class="ml-2">전화 번호: ${store.phoneNumber}</div>
-					<div class="ml-2">주소 : ${store.address}</div>
-				</div><br>
-			</c:forEach>
-			 --%>
+			<h1 class="mt-2">${name}-리뷰</h1>
+			
+			<c:if test="${empty newReviewList}">
+				<h1 class="font-weight-bold text-center pt-5">작성된 리뷰가 없습니다.</h1>
+			</c:if>
+			
+			<c:if test="${not empty newReviewList}">
+				<c:forEach var="review" items="${newReviewList}">
+					<div class="box">
+					
+						<div class="ml-2 mt-1 d-flex align-items-center">
+							<small class="pt-2 font-weight-bold">${review.userName}</small>
+							
+							<div class="pl-2">
+							<c:set var="point" value="${review.point}" />
+								<c:forEach begin="1" end="5">
+									<c:choose>
+										<c:when test="${point > 0.5}">
+											<img src="/img/lesson05/star_fill.png" width="20" alt="star">
+											<c:set var="point" value="${point - 1}" />
+										</c:when>
+										<c:when test="${point == 0.5}">
+											<img src="/img/lesson05/star_half.png" width="20" alt="halfstar">
+											<c:set var="point" value="${point - 0.5}" />
+										</c:when>
+										<c:when test="${point == 0}">
+											<img src="/img/lesson05/star_empty.png" width="20" alt="emptystar">
+										</c:when>
+									</c:choose>
+								</c:forEach>
+							
+							
+							</div>
+						</div>
+						
+						<small class="text-secondary d-block my-2 ml-2">
+						<fmt:formatDate value="${review.createdAt}" pattern="yyyy년 M월 d일"/> 
+						</small>
+						<small class="menu-box rounded p-1 ml-2">${review.menu}</small>
+					</div><br>
+				 </c:forEach>
+			 </c:if>
 		</section>
 		<footer>
 			<jsp:include page="storeFooter.jsp" />
